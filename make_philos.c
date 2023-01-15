@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdlib.h>
 
 void	*handle_philo(void *arg)
 {
