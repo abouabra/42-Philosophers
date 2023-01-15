@@ -34,20 +34,14 @@ void	*handle_philo(void *arg)
 	
 
 		print_status(vars, "is eating\n", i + 1);
-		if(vars->kill_yourself)
-		{
-			pthread_mutex_unlock(&vars->mutex[i]);
-			pthread_mutex_unlock(&vars->mutex[(i + 1) % vars->n_of_philos]);
-			return 0;
-		}
+
 		ft_usleep(vars->time_to_eat);
 		vars->eating_duration[i] = get_time();
 		vars->eating_times[i]++;
 
 		pthread_mutex_unlock(&vars->mutex[i]);
 		pthread_mutex_unlock(&vars->mutex[(i + 1) % vars->n_of_philos]);
-		if(vars->kill_yourself)
-			return 0;
+
 		print_status(vars, "is sleeping\n", i + 1);
 		
 		print_status(vars, "is thinking\n", i + 1);
@@ -117,7 +111,7 @@ void	make_philos(t_args *vars)
 	// i = -1;
 	// while (++i < vars->n_of_philos)
 	// 	pthread_detach(vars->th[i]);
-	// i = -1;
+	i = -1;
 	while (++i < vars->n_of_philos)
 		if (pthread_join(vars->th[i], NULL))
 			return ;

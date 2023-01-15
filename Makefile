@@ -14,7 +14,8 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(OSRC)
-	@$(CC) -Wall -Wextra -Werror -pthread -fsanitize=leak $^ -o $@
+#	@$(CC) -Wall -Wextra -Werror -pthread -fsanitize=leak $^ -o $@
+	@$(CC) -Wall -Wextra -Werror -pthread $^ -o $@
 	@printf "$(RED)--------Philosophers DONE--------$(RESET)\n"
 
 %.o : %.c
