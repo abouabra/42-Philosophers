@@ -15,7 +15,8 @@
 
 void print_status(t_args *vars, char *status, int id)
 {
-	printf("%ld %d %s", get_interval(vars->initial_time, get_time()), id, status);
+	if(vars->kill_yourself == 0)
+		printf("%ld %d %s", get_interval(vars->initial_time, get_time()), id, status);
 }
 
 int is_every_one_ate(t_args *vars)

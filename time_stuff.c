@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 11:56:27 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/14 16:51:09 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:19:37 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ long get_time(void)
 	return elapsed_time;
 }
 
-void ft_usleep(int time)
+void ft_usleep(t_args *vars, int time)
 {
 	time_t waiting_until = get_time() + time;
 	// printf("Waiting until: %ld\n", waiting_until);
-	while (waiting_until > get_time())
+	while (waiting_until > get_time() && vars->kill_yourself == 0)
 		usleep(50);
 }

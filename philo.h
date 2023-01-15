@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 10:57:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/14 17:50:17 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:19:47 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void *handle_philo(void *arg);
 
 long get_interval(time_t before, time_t after);
 long get_time(void);
-void ft_usleep(int ms);
+void ft_usleep(t_args *vars, int time);
 int	is_every_one_ate(t_args *vars);
 
 void print_status(t_args *vars, char *status, int id);
