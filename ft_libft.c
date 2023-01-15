@@ -12,28 +12,28 @@
 
 #include "philo.h"
 
-void    *ft_calloc(size_t nitems, size_t size)
+void	*ft_calloc(size_t nitems, size_t size)
 {
-	void    *str;
+	void	*str;
 
 	str = malloc(nitems * size);
 	if (!str)
 		return (0);
-	memset(str,0, nitems * size);
+	memset(str, 0, nitems * size);
 	return (str);
 }
 
-int     ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int     i;
-	int     sign;
-	int     final;
+	int	i;
+	int	sign;
+	int	final;
 
 	i = 0;
 	sign = 1;
 	final = 0;
 	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
-			|| str[i] == '\f' || str[i] == '\r')
+		|| str[i] == '\f' || str[i] == '\r')
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
