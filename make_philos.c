@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:44:51 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/15 18:58:14 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/15 19:05:42 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,13 @@ void	philo_food(t_args *vars, int i)
 	{
 		pthread_mutex_lock(&vars->mutex[(i + 1) % vars->n_of_philos]);
 		print_status(vars, IS_TAKING_FORK, i + 1);
-	}
-	print_status(vars, IS_EATING, i + 1);
-	ft_usleep(vars, vars->time_to_eat);
-	if (vars->n_of_philos > 1)
+		print_status(vars, IS_EATING, i + 1);
+		ft_usleep(vars, vars->time_to_eat);
 		vars->eating_duration[i] = get_time();
-	vars->eating_times[i]++;
-	pthread_mutex_unlock(&vars->mutex[i]);
-	if (vars->n_of_philos > 1)
+		vars->eating_times[i]++;
+		pthread_mutex_unlock(&vars->mutex[i]);
 		pthread_mutex_unlock(&vars->mutex[(i + 1) % vars->n_of_philos]);
+	}
 }
 
 void	*handle_philo(void *arg)
