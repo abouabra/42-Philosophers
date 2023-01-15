@@ -30,12 +30,12 @@ void	*handle_philo(void *arg)
 			return 0;
 
 		pthread_mutex_lock(&vars->mutex[i]);
-		print_status(vars, "has taken a fork\n", i + 1);
+		print_status(vars, IS_TAKING_FORK, i + 1);
 		if(vars->n_of_philos > 1)
 			pthread_mutex_lock(&vars->mutex[(i + 1) % vars->n_of_philos]);
-		print_status(vars, "has taken a fork\n", i + 1);
+		// print_status(vars, "has taken a fork\n", i + 1);
 
-		print_status(vars, "is eating\n", i + 1);
+		// print_status(vars, "is eating\n", i + 1);
 		ft_usleep(vars, vars->time_to_eat);
 		if(vars->n_of_philos > 1)
 			vars->eating_duration[i] = get_time();
@@ -45,8 +45,8 @@ void	*handle_philo(void *arg)
 		if(vars->n_of_philos > 1)
 			pthread_mutex_unlock(&vars->mutex[(i + 1) % vars->n_of_philos]);
 
-		print_status(vars, "is sleeping\n", i + 1);
-		print_status(vars, "is thinking\n", i + 1);
+		// print_status(vars, "is sleeping\n", i + 1);
+		// print_status(vars, "is thinking\n", i + 1);
 		ft_usleep(vars, vars->time_to_sleep);
 	}
 	return (NULL);
@@ -78,8 +78,6 @@ void	make_philos(t_args *vars)
 
 	while(1)
 	{
-		// if(vars->kill_yourself)
-		// 	break;
 		i = -1;
 		while(++i < vars->n_of_philos)
 		{
@@ -103,18 +101,4 @@ void	make_philos(t_args *vars)
 		}
 		usleep(50);
 	}
-	// i = -1;
-	// while (++i < vars->n_of_philos)
-	// 	pthread_detach(vars->th[i]);
-
-	// i = -1;
-	// while (++i < vars->n_of_philos)
-	// 	if (pthread_join(vars->th[i], NULL))
-	// 		return ;
-
-	// end_phase(vars);
-
-	// i = -1;
-	// while (++i < vars->n_of_philos)
-	// 	pthread_mutex_destroy(&(vars->mutex[i]));
 }

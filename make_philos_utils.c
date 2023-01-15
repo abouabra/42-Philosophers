@@ -13,10 +13,14 @@
 
 #include "philo.h"
 
-void print_status(t_args *vars, char *status, int id)
+void print_status(t_args *vars, int status, int id)
 {
-	if(vars->kill_yourself == 0)
-		printf("%ld %d %s", get_interval(vars->initial_time, get_time()), id, status);
+	if(vars->kill_yourself)
+		return;
+	if(status == IS_TAKING_FORK)
+		printf("%s %ld %d has taken a fork\n%s",vars->colors[GREEN],
+		get_interval(vars->initial_time, get_time()),
+		id, vars->colors[RESET]);
 }
 
 int is_every_one_ate(t_args *vars)
