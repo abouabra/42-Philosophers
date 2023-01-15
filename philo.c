@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:31:26 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/15 18:21:56 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:37:39 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void end_phase(t_args *vars)
 {
 	int i;
 
-	// i = -1;
-	// while (++i < vars->n_of_philos)
-	// 	pthread_mutex_unlock(&(vars->mutex[i]));
+	i = -1;
+	while (++i < vars->n_of_philos)
+		pthread_mutex_unlock(&(vars->mutex[i]));
 	i = -1;
 	while (++i < vars->n_of_philos)
 		pthread_mutex_destroy(&(vars->mutex[i]));
