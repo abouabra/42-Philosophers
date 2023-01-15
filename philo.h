@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 10:57:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/15 14:38:56 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:21:50 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct t_args {
 	pthread_mutex_t mutex[200];
 	time_t initial_time;
 	
-	char *colors[7];
+	char *colors[6];
 	int eating_times[200];
 	long eating_duration[200];
 	int kill_yourself;
@@ -54,7 +54,6 @@ enum {
 	BLUE,
 	YELLOW,
 	WHITE,
-	CYAN,
 };
 
 void    *ft_calloc(size_t nitems, size_t size);

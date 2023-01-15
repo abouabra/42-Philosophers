@@ -31,11 +31,13 @@ void	*handle_philo(void *arg)
 
 		pthread_mutex_lock(&vars->mutex[i]);
 		print_status(vars, IS_TAKING_FORK, i + 1);
-		if(vars->n_of_philos > 1)
-			pthread_mutex_lock(&vars->mutex[(i + 1) % vars->n_of_philos]);
-		// print_status(vars, "has taken a fork\n", i + 1);
 
-		// print_status(vars, "is eating\n", i + 1);
+		if(vars->n_of_philos > 1)
+		{
+			pthread_mutex_lock(&vars->mutex[(i + 1) % vars->n_of_philos]);
+			print_status(vars, IS_TAKING_FORK, i + 1);
+		}
+		print_status(vars, IS_EATING, i + 1);
 		ft_usleep(vars, vars->time_to_eat);
 		if(vars->n_of_philos > 1)
 			vars->eating_duration[i] = get_time();
@@ -44,10 +46,11 @@ void	*handle_philo(void *arg)
 		pthread_mutex_unlock(&vars->mutex[i]);
 		if(vars->n_of_philos > 1)
 			pthread_mutex_unlock(&vars->mutex[(i + 1) % vars->n_of_philos]);
+		print_status(vars, IS_SLEEPING, i + 1);
 
-		// print_status(vars, "is sleeping\n", i + 1);
-		// print_status(vars, "is thinking\n", i + 1);
 		ft_usleep(vars, vars->time_to_sleep);
+		print_status(vars, IS_THINKING, i + 1);
+
 	}
 	return (NULL);
 }
@@ -83,7 +86,7 @@ void	make_philos(t_args *vars)
 		{
 			if (get_interval(vars->eating_duration[i],get_time()) >= vars->time_to_die)
 			{
-				printf("%ld %d died\n", get_interval(vars->initial_time, get_time()), i + 1);
+				print_status(vars, IS_DEAD, i + 1);
 
 				vars->kill_yourself = 1;
 
@@ -92,7 +95,8 @@ void	make_philos(t_args *vars)
 			}
 			if (vars->n_times_must_eat && is_every_one_ate(vars))
 			{
-				printf("%ld EVERY ONE ATE\n", get_interval(vars->initial_time, get_time()));
+				print_status(vars, IS_FULL, i + 1);
+				
 				vars->kill_yourself = 1;
 
 				end_phase(vars);

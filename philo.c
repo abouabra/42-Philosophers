@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:31:26 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/15 14:44:17 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:21:56 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void fill_colors(t_args *vars)
 	vars->colors[GREEN] = "\033[1;32m";
 	vars->colors[BLUE] = "\033[1;34m";
 	vars->colors[YELLOW] = "\033[1;33m";
-	vars->colors[WHITE] = "\033[1;30m";
-	vars->colors[CYAN] = "\033[1;36m";
-
+	vars->colors[WHITE] = "\033[1;37m";
 }
 
 int main(int ac, char **av)
