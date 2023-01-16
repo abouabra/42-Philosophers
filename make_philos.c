@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:44:51 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/15 19:05:42 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/16 10:43:14 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	make_philos(t_args *vars)
 					print_status(vars, IS_DEAD, i + 1);
 				vars->kill_yourself = 1;
 				end_phase(vars);
-				exit(0);
+				return ;
 			}
 		}
 		usleep(50);
