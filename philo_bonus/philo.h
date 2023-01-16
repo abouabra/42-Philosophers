@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 10:57:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/16 14:21:57 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:32:17 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ typedef struct t_args
 
 	time_t			initial_time;
 	int				id;
+	
 	int				kill_yourself;
-	int				eating_times[200];
-	long			eating_duration[200];
+	long			eating_times;
+	long			eating_duration;
 
 	sem_t *forks;
+	sem_t *sem_error;
 }					t_args;
 
 enum

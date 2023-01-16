@@ -6,21 +6,39 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:44:51 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/16 14:51:05 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:47:45 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdio.h>
-#include <sys/fcntl.h>
+#include <stdlib.h>
+#include <sys/semaphore.h>
 #include <unistd.h>
 
 void philo_life(t_args *vars)
 {
+	long eating_duration;
+
+
 	if(vars->id % 2 == 1)
 		usleep(50);
-	while(1)
+	eating_duration = get_time();
+
+	int i = -1;
+	while(++i < 10)
 	{
+		if(sem_open("/IM_DEAD", O_EXCL, 0644, 1) != SEM_FAILED)
+		{
+		 	return;
+		}
+		if (get_interval(eating_duration, get_time()) >= vars->time_to_die)
+		{
+			sem_close(sem_open("/IM_DEAD", O_CREAT | O_EXCL, 0644, 1));
+			print_status(vars, IS_DEAD, vars->id +1);
+			vars->kill_yourself = 1;
+			// exit(0);
+		}
 		print_status(vars, IS_TAKING_FORK, vars->id +1);
 		sem_wait(vars->forks);
 		print_status(vars, IS_TAKING_FORK, vars->id +1);
@@ -28,7 +46,7 @@ void philo_life(t_args *vars)
 		
 		print_status(vars, IS_EATING, vars->id +1);
 		ft_usleep(vars, vars->time_to_eat);
-
+		eating_duration = get_time();
 		
 		sem_post(vars->forks);
 		sem_post(vars->forks);
@@ -60,9 +78,9 @@ void	make_philos(t_args *vars)
 			exit(0);
 		}
 	}
-
 	while(waitpid(-1, NULL, 0) > 0)
 		;
 	sem_close(vars->forks);
 	sem_unlink("/FORKS");
+	sem_unlink("/IM_DEAD");
 }
