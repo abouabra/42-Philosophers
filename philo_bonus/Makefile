@@ -3,7 +3,7 @@ SRC = philo.c ft_libft.c check_args.c make_philos.c make_philos_utils.c time_stu
 OSRC=$(SRC:.c=.o)
 
 AR= ar -rcs
-NAME= philo
+NAME= philo_bonus
 
 RED = \033[1;31m
 GREEN = \033[1;32m
@@ -14,7 +14,6 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(OSRC)
-#	@$(CC) -Wall -Wextra -Werror -pthread -fsanitize=leak $^ -o $@
 	@$(CC) -Wall -Wextra -Werror -pthread $^ -o $@
 	@printf "$(RED)--------Philosophers DONE--------$(RESET)\n"
 

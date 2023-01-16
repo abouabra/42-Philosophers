@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 10:57:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/15 18:40:50 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:26:45 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct t_args
 	pthread_mutex_t	mutex[200];
 	time_t			initial_time;
 
-	char			*colors[6];
 	int				eating_times[200];
 	long			eating_duration[200];
 	int				kill_yourself;
@@ -47,16 +46,6 @@ enum
 	IS_THINKING,
 	IS_DEAD,
 	IS_FULL,
-};
-
-enum
-{
-	RESET,
-	RED,
-	GREEN,
-	BLUE,
-	YELLOW,
-	WHITE,
 };
 
 void				*ft_calloc(size_t nitems, size_t size);

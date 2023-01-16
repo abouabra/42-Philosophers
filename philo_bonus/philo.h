@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 10:57:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/15 18:40:50 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:21:57 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <semaphore.h>
+# include <fcntl.h>
 
 typedef struct t_args
 {
@@ -28,15 +30,13 @@ typedef struct t_args
 	int				time_to_sleep;
 	int				n_times_must_eat;
 
-	pthread_t		th[200];
-	pthread_mutex_t	mutex[200];
 	time_t			initial_time;
-
-	char			*colors[6];
+	int				id;
+	int				kill_yourself;
 	int				eating_times[200];
 	long			eating_duration[200];
-	int				kill_yourself;
-	int				*index;
+
+	sem_t *forks;
 }					t_args;
 
 enum
@@ -49,15 +49,6 @@ enum
 	IS_FULL,
 };
 
-enum
-{
-	RESET,
-	RED,
-	GREEN,
-	BLUE,
-	YELLOW,
-	WHITE,
-};
 
 void				*ft_calloc(size_t nitems, size_t size);
 int					ft_atoi(const char *str);
