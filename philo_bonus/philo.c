@@ -14,7 +14,6 @@
 
 void	end_phase(t_args *vars)
 {
-
 	free(vars);
 }
 

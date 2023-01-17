@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:36:04 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/17 13:07:53 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:52:31 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,46 +103,5 @@ char	*ft_itoa(int n)
 		return (0);
 	len--;
 	str = format(nb, len, str);
-	return (str);
-}
-
-int	ft_strlen(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin_gnl(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*str;
-
-	if (!s1)
-	{
-		s1 = malloc(1 * sizeof(char));
-		if (!s1)
-			return (0);
-		s1[0] = 0;
-	}
-	if (s2 == NULL)
-		return (0);
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!str)
-		return (0);
-	i = -1;
-	j = 0;
-	while (s1[++i])
-		str[i] = s1[i];
-	while (s2[j])
-		str[i++] = s2[j++];
-	str[i] = 0;
-	free(s1);
 	return (str);
 }
