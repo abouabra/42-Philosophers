@@ -6,11 +6,12 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:44:51 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/17 15:56:52 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:19:19 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h>
 
 void	check_for_eat(t_args *vars)
 {
@@ -34,7 +35,6 @@ void	check_for_eat(t_args *vars)
 void	*check_for_death(void *args)
 {
 	t_args	*vars;
-	char	*name;
 
 	vars = (t_args *)args;
 	while (1)
@@ -62,8 +62,9 @@ void	philo_life(t_args *vars)
 {
 	pthread_t	ph;
 
-	vars->eating_duration = get_time();
 	pthread_create(&ph, NULL, check_for_death, vars);
+
+	vars->eating_duration = get_time();
 	if (vars->id % 2 == 1)
 		ft_usleep(vars, 10);
 	while (1)
@@ -95,7 +96,7 @@ void	init_philos(t_args *vars)
 	sem_unlink("/FORKS");
 	sem_unlink("/IM_DEAD");
 	i = -1;
-	while (++i < vars->n_of_philos)
+	while (++i < 200)
 	{
 		name = ft_strjoin_gnl(ft_itoa(i), "_IS_FULL");
 		sem_unlink(name);
@@ -126,7 +127,4 @@ void	make_philos(t_args *vars)
 	}
 	while (waitpid(-1, NULL, 0) > 0)
 		;
-	sem_close(vars->forks);
-	sem_unlink("/FORKS");
-	sem_unlink("/IM_DEAD");
 }
