@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:31:26 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/16 14:22:05 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:37:20 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	make_philos(vars);
+	end_phase(vars);
 	return (0);
 }

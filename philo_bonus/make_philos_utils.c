@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:42:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/16 14:28:49 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:10:20 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,26 @@ void	print_status(t_args *vars, int status, int id)
 	print_status_2(vars, status, id);
 }
 
+int	is_full(t_args *vars)
+{
+	
+	// if(vars->n_times_must_eat == 0)
+	// 	return 0;
+	if (vars->eating_times < vars->n_times_must_eat)
+		return (0);
+	return (1);
+}
+
 int	is_every_one_ate(t_args *vars)
 {
-	(void) vars;
-	return 0;
+	int	i;
+
+	i = -1;
+	while (++i < vars->n_of_philos)
+	{
+		char *name = ft_strjoin_gnl(ft_itoa(i),"_IS_FULL");
+		if(sem_open(name, O_EXCL, 0644, 1) == SEM_FAILED)
+			return (0);
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 10:57:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/16 15:32:17 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:35:25 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <semaphore.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 
 typedef struct t_args
 {
@@ -38,7 +39,6 @@ typedef struct t_args
 	long			eating_duration;
 
 	sem_t *forks;
-	sem_t *sem_error;
 }					t_args;
 
 enum
@@ -61,7 +61,11 @@ void				*handle_philo(void *arg);
 long				get_interval(time_t before, time_t after);
 long				get_time(void);
 void				ft_usleep(t_args *vars, int time);
-int					is_every_one_ate(t_args *vars);
+int	is_full(t_args *vars);
 void				print_status(t_args *vars, int status, int id);
+
+char	*ft_strjoin_gnl(char *s1, char *s2);
+char	*ft_itoa(int n);
+int	is_every_one_ate(t_args *vars);
 
 #endif
