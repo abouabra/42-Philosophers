@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:44:51 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/17 20:19:19 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/18 10:16:45 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	check_for_eat(t_args *vars)
 			print_status(vars, IS_FULL, vars->id + 1);
 		end_phase(vars);
 		exit(0);
-	}	
+	}
 }
 
 void	*check_for_death(void *args)
@@ -58,12 +58,26 @@ void	*check_for_death(void *args)
 	return (NULL);
 }
 
+void	eating_stage(t_args *vars)
+{
+	if (vars->n_of_philos > 1)
+	{
+		print_status(vars, IS_TAKING_FORK, vars->id + 1);
+		sem_wait(vars->forks);
+		print_status(vars, IS_EATING, vars->id + 1);
+		ft_usleep(vars, vars->time_to_eat);
+		vars->eating_duration = get_time();
+		vars->eating_times += 1;
+		sem_post(vars->forks);
+		sem_post(vars->forks);
+	}
+}
+
 void	philo_life(t_args *vars)
 {
 	pthread_t	ph;
 
 	pthread_create(&ph, NULL, check_for_death, vars);
-
 	vars->eating_duration = get_time();
 	if (vars->id % 2 == 1)
 		ft_usleep(vars, 10);
@@ -71,45 +85,17 @@ void	philo_life(t_args *vars)
 	{
 		print_status(vars, IS_TAKING_FORK, vars->id + 1);
 		sem_wait(vars->forks);
-		if (vars->n_of_philos > 1)
-		{
-			print_status(vars, IS_TAKING_FORK, vars->id + 1);
-			sem_wait(vars->forks);
-			print_status(vars, IS_EATING, vars->id + 1);
-			ft_usleep(vars, vars->time_to_eat);
-			vars->eating_duration = get_time();
-			vars->eating_times += 1;
-			sem_post(vars->forks);
-			sem_post(vars->forks);
-		}
+		eating_stage(vars);
 		print_status(vars, IS_SLEEPING, vars->id + 1);
 		ft_usleep(vars, vars->time_to_sleep);
 		print_status(vars, IS_THINKING, vars->id + 1);
 	}
 }
 
-void	init_philos(t_args *vars)
-{
-	int		i;
-	char	*name;
-
-	sem_unlink("/FORKS");
-	sem_unlink("/IM_DEAD");
-	i = -1;
-	while (++i < 200)
-	{
-		name = ft_strjoin_gnl(ft_itoa(i), "_IS_FULL");
-		sem_unlink(name);
-		free(name);
-	}
-	vars->forks = sem_open("/FORKS", O_CREAT | O_EXCL, 0644, vars->n_of_philos);
-	vars->initial_time = get_time();
-}
-
 void	make_philos(t_args *vars)
 {
-	int		i;
-	int		id;
+	int	i;
+	int	id;
 
 	init_philos(vars);
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 10:57:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/17 15:53:26 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/18 10:16:00 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ char		*ft_strjoin_gnl(char *s1, char *s2);
 char		*ft_itoa(int n);
 int			is_every_one_ate(t_args *vars);
 char		*ft_strjoin_gnl(char *s1, char *s2);
+void		init_philos(t_args *vars);
 
 #endif

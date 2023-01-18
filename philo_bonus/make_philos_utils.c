@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:42:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/17 20:12:26 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/18 10:16:07 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,22 @@ int	is_every_one_ate(t_args *vars)
 			return (0);
 	}
 	return (1);
+}
+
+void	init_philos(t_args *vars)
+{
+	int		i;
+	char	*name;
+
+	sem_unlink("/FORKS");
+	sem_unlink("/IM_DEAD");
+	i = -1;
+	while (++i < 200)
+	{
+		name = ft_strjoin_gnl(ft_itoa(i), "_IS_FULL");
+		sem_unlink(name);
+		free(name);
+	}
+	vars->forks = sem_open("/FORKS", O_CREAT | O_EXCL, 0644, vars->n_of_philos);
+	vars->initial_time = get_time();
 }
