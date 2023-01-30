@@ -6,12 +6,11 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:44:51 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/18 10:16:45 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:16:08 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <unistd.h>
 
 void	check_for_eat(t_args *vars)
 {
@@ -53,7 +52,7 @@ void	*check_for_death(void *args)
 			exit(0);
 		}
 		check_for_eat(vars);
-		ft_usleep(vars, 10);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -62,10 +61,10 @@ void	eating_stage(t_args *vars)
 {
 	if (vars->n_of_philos > 1)
 	{
-		print_status(vars, IS_TAKING_FORK, vars->id + 1);
 		sem_wait(vars->forks);
+		print_status(vars, IS_TAKING_FORK, vars->id + 1);
 		print_status(vars, IS_EATING, vars->id + 1);
-		ft_usleep(vars, vars->time_to_eat);
+		usleep(1000 * vars->time_to_eat);
 		vars->eating_duration = get_time();
 		vars->eating_times += 1;
 		sem_post(vars->forks);
@@ -73,21 +72,20 @@ void	eating_stage(t_args *vars)
 	}
 }
 
-void	philo_life(t_args *vars)
+void	philo_life(void *args)
 {
 	pthread_t	ph;
+	t_args		*vars;
 
+	vars = (t_args *)args;
 	pthread_create(&ph, NULL, check_for_death, vars);
-	vars->eating_duration = get_time();
-	if (vars->id % 2 == 1)
-		ft_usleep(vars, 10);
 	while (1)
 	{
-		print_status(vars, IS_TAKING_FORK, vars->id + 1);
 		sem_wait(vars->forks);
+		print_status(vars, IS_TAKING_FORK, vars->id + 1);
 		eating_stage(vars);
 		print_status(vars, IS_SLEEPING, vars->id + 1);
-		ft_usleep(vars, vars->time_to_sleep);
+		usleep(1000 * vars->time_to_sleep);
 		print_status(vars, IS_THINKING, vars->id + 1);
 	}
 }
@@ -98,15 +96,16 @@ void	make_philos(t_args *vars)
 	int	id;
 
 	init_philos(vars);
+	vars->eating_duration = get_time();
 	i = -1;
 	while (++i < vars->n_of_philos)
 	{
-		vars->id = i;
 		id = fork();
 		if (id == -1)
 			return ;
 		if (id == 0)
 		{
+			vars->id = i;
 			philo_life(vars);
 			exit(0);
 		}

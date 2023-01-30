@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 10:57:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/18 10:16:00 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:36:49 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 # include <fcntl.h>
+# include <limits.h>
 # include <pthread.h>
 # include <semaphore.h>
 # include <stdio.h>
@@ -39,6 +40,7 @@ typedef struct t_args
 	long	eating_duration;
 
 	sem_t	*forks;
+	sem_t	*print;
 }			t_args;
 
 enum

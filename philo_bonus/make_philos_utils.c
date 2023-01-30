@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:42:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/18 10:16:07 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:16:50 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ void	print_status_2(t_args *vars, int status, int id)
 {
 	if (status == IS_THINKING)
 		printf("%ld %d is thinking\n",
-			get_interval(vars->initial_time, get_time()), id);
+			get_interval(vars->initial_time, get_time()),
+			id);
+	sem_post(vars->print);
 	if (status == IS_DEAD)
 		printf("%ld %d has died\n",
-			get_interval(vars->initial_time, get_time()), id);
+			get_interval(vars->initial_time, get_time()),
+			id);
 	if (status == IS_FULL)
 		printf("%ld EVERY ONE ATE\n",
 			get_interval(vars->initial_time, get_time()));
@@ -27,17 +30,21 @@ void	print_status_2(t_args *vars, int status, int id)
 
 void	print_status(t_args *vars, int status, int id)
 {
+	sem_wait(vars->print);
 	if (vars->kill_yourself)
 		return ;
 	if (status == IS_TAKING_FORK)
 		printf("%ld %d has taken a fork\n",
-			get_interval(vars->initial_time, get_time()), id);
+			get_interval(vars->initial_time, get_time()),
+			id);
 	if (status == IS_EATING)
 		printf("%ld %d is eating\n",
-			get_interval(vars->initial_time, get_time()), id);
+			get_interval(vars->initial_time, get_time()),
+			id);
 	if (status == IS_SLEEPING)
 		printf("%ld %d is sleeping\n",
-			get_interval(vars->initial_time, get_time()), id);
+			get_interval(vars->initial_time, get_time()),
+			id);
 	print_status_2(vars, status, id);
 }
 
@@ -52,13 +59,17 @@ int	is_every_one_ate(t_args *vars)
 {
 	int		i;
 	char	*name;
+	sem_t	*tmp;
 
 	i = -1;
 	while (++i < vars->n_of_philos)
 	{
 		name = ft_strjoin_gnl(ft_itoa(i), "_IS_FULL");
-		if (sem_open(name, O_EXCL, 0644, 1) == SEM_FAILED)
+		tmp = sem_open(name, O_EXCL, 0644, 1);
+		if (tmp == SEM_FAILED)
 			return (0);
+		sem_close(tmp);
+		free(name);
 	}
 	return (1);
 }
@@ -69,6 +80,7 @@ void	init_philos(t_args *vars)
 	char	*name;
 
 	sem_unlink("/FORKS");
+	sem_unlink("/PRINT");
 	sem_unlink("/IM_DEAD");
 	i = -1;
 	while (++i < 200)
@@ -78,5 +90,6 @@ void	init_philos(t_args *vars)
 		free(name);
 	}
 	vars->forks = sem_open("/FORKS", O_CREAT | O_EXCL, 0644, vars->n_of_philos);
+	vars->print = sem_open("/PRINT", O_CREAT | O_EXCL, 0644, 1);
 	vars->initial_time = get_time();
 }
