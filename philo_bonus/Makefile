@@ -1,4 +1,4 @@
-SRC = philo.c ft_libft.c ft_libft_2.c check_args.c make_philos.c make_philos_utils.c time_stuff.c 
+SRC = philo.c ft_libft.c ft_libft_2.c check_args.c make_philos.c make_philos_utils.c time_stuff.c  garbage_collector.c linked_list.c
 
 OSRC=$(SRC:.c=.o)
 

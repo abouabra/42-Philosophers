@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:42:15 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/30 16:16:50 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:35:19 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	print_status_2(t_args *vars, int status, int id)
 		printf("%ld %d is thinking\n",
 			get_interval(vars->initial_time, get_time()),
 			id);
-	sem_post(vars->print);
 	if (status == IS_DEAD)
 		printf("%ld %d has died\n",
 			get_interval(vars->initial_time, get_time()),
@@ -26,6 +25,7 @@ void	print_status_2(t_args *vars, int status, int id)
 	if (status == IS_FULL)
 		printf("%ld EVERY ONE ATE\n",
 			get_interval(vars->initial_time, get_time()));
+	sem_post(vars->print);
 }
 
 void	print_status(t_args *vars, int status, int id)
@@ -69,7 +69,6 @@ int	is_every_one_ate(t_args *vars)
 		if (tmp == SEM_FAILED)
 			return (0);
 		sem_close(tmp);
-		free(name);
 	}
 	return (1);
 }
@@ -87,7 +86,6 @@ void	init_philos(t_args *vars)
 	{
 		name = ft_strjoin_gnl(ft_itoa(i), "_IS_FULL");
 		sem_unlink(name);
-		free(name);
 	}
 	vars->forks = sem_open("/FORKS", O_CREAT | O_EXCL, 0644, vars->n_of_philos);
 	vars->print = sem_open("/PRINT", O_CREAT | O_EXCL, 0644, 1);

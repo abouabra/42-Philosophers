@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:36:04 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/17 15:52:01 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:28:53 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 
 	if (!s1)
 	{
-		s1 = malloc(1 * sizeof(char));
+		s1 = my_alloc(sizeof(char));
 		if (!s1)
 			return (0);
 		s1[0] = 0;
 	}
 	if (s2 == NULL)
 		return (0);
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = my_alloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!str)
 		return (0);
 	i = -1;
@@ -49,6 +49,5 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	while (s2[j])
 		str[i++] = s2[j++];
 	str[i] = 0;
-	free(s1);
 	return (str);
 }

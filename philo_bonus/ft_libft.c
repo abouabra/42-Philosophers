@@ -6,22 +6,11 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:36:04 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/17 15:52:31 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:27:25 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	*ft_calloc(size_t nitems, size_t size)
-{
-	void	*str;
-
-	str = malloc(nitems * size);
-	if (!str)
-		return (0);
-	memset(str, 0, nitems * size);
-	return (str);
-}
 
 int	ft_atoi(const char *str)
 {
@@ -98,7 +87,7 @@ char	*ft_itoa(int n)
 
 	nb = n;
 	len = int_len(n);
-	str = ft_calloc(len + 1, sizeof(char));
+	str = my_alloc((len + 1) * sizeof(char));
 	if (!str)
 		return (0);
 	len--;

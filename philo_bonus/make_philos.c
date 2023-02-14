@@ -6,7 +6,7 @@
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:44:51 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/30 16:16:08 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:30:08 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ void	check_for_eat(t_args *vars)
 	{
 		name = ft_strjoin_gnl(ft_itoa(vars->id), "_IS_FULL");
 		sem_close(sem_open(name, O_CREAT | O_EXCL, 0644, 1));
-		free(name);
 	}
 	if (vars->n_times_must_eat && is_every_one_ate(vars))
 	{
 		if (vars->id == 0)
 			print_status(vars, IS_FULL, vars->id + 1);
-		end_phase(vars);
-		exit(0);
+		custom_exit(0);
 	}
 }
 
@@ -48,8 +46,7 @@ void	*check_for_death(void *args)
 		if (sem_open("/IM_DEAD", O_EXCL, 0644, 1) != SEM_FAILED)
 		{
 			unlink("/IM_DEAD");
-			end_phase(vars);
-			exit(0);
+			custom_exit(0);
 		}
 		check_for_eat(vars);
 		usleep(100);
