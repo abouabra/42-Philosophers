@@ -1,53 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_libft_2.c                                       :+:      :+:    :+:   */
+/*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/07 11:36:04 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/30 16:28:53 by abouabra         ###   ########.fr       */
+/*   Created: 2023/01/30 16:19:42 by abouabra          #+#    #+#             */
+/*   Updated: 2023/02/14 17:49:42 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
-int	ft_strlen(char *s)
+void	garbage_collector(void *adress, int arg)
 {
-	int	i;
+	static t_list	*head;
+	t_list			*node;
 
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
+	if (arg)
+		ft_lstclear(&head, free);
+	else
+	{
+		node = ft_lstnew(adress);
+		ft_lstadd_back(&head, node);
+	}
 }
 
-char	*ft_strjoin_gnl(char *s1, char *s2)
+void	custom_exit(int exit_code)
 {
-	int		i;
-	int		j;
-	char	*str;
+	garbage_collector(NULL, 1);
+	exit(exit_code);
+}
 
-	if (!s1)
-	{
-		s1 = my_alloc(sizeof(char));
-		if (!s1)
-			return (0);
-		s1[0] = 0;
-	}
-	if (s2 == NULL)
-		return (0);
-	str = my_alloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+void	*my_alloc(size_t size)
+{
+	void	*str;
+
+	str = malloc(size);
 	if (!str)
 		return (0);
-	i = -1;
-	j = 0;
-	while (s1[++i])
-		str[i] = s1[i];
-	while (s2[j])
-		str[i++] = s2[j++];
-	str[i] = 0;
+	memset(str, 0, size);
+	garbage_collector(str, 0);
 	return (str);
 }

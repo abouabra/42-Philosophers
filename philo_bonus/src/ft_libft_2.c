@@ -1,50 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_libft.c                                         :+:      :+:    :+:   */
+/*   ft_libft_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abouabra < abouabra@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:36:04 by abouabra          #+#    #+#             */
-/*   Updated: 2023/01/07 12:28:01 by abouabra         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:28:53 by abouabra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
-void	*ft_calloc(size_t nitems, size_t size)
-{
-	void	*str;
-
-	str = malloc(nitems * size);
-	if (!str)
-		return (0);
-	memset(str, 0, nitems * size);
-	return (str);
-}
-
-int	ft_atoi(const char *str)
+int	ft_strlen(char *s)
 {
 	int	i;
-	int	sign;
-	int	final;
 
 	i = 0;
-	sign = 1;
-	final = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
+	if (!s)
+		return (0);
+	while (s[i])
 		i++;
-	if (str[i] == '-' || str[i] == '+')
+	return (i);
+}
+
+char	*ft_strjoin_gnl(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	if (!s1)
 	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
+		s1 = my_alloc(sizeof(char));
+		if (!s1)
+			return (0);
+		s1[0] = 0;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		final = final * 10 + str[i] - '0';
-		i++;
-	}
-	return (final * sign);
+	if (s2 == NULL)
+		return (0);
+	str = my_alloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!str)
+		return (0);
+	i = -1;
+	j = 0;
+	while (s1[++i])
+		str[i] = s1[i];
+	while (s2[j])
+		str[i++] = s2[j++];
+	str[i] = 0;
+	return (str);
 }
