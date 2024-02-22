@@ -2,7 +2,8 @@
 
 ## Description
 
-Philosophers is a project that aims to create a simulation of the dining philosophers problem 
+Philosophers is a project that aims to create a simulation of the dining philosophers problem.
+
 the dining philosophers problem is a classic synchronization problem that is used to illustrate the challenges of avoiding deadlock and starvation in a multi-threaded environment. The problem is described as follows:
 - There are 5 philosophers sitting at a round table.
 - Each philosopher has a plate of spaghetti.
